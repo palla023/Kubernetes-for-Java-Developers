@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: eurekaserver
-          image: palla023/eureka-ms:5.0
+          image: DockerimageName
           ports:
             - containerPort: 8761
           env:
