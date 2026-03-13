@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+        - name: api-gateway
+          image: palla023/apigateway:8.0
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8058
+          env:
+          - name: SPRING_APPLICATION_NAME
+            value: api-gateway
+          - name: SPRING_PROFILES_ACTIVE
+            value: cloud
+          - name: EUREKA_SERVER
+            value: eureka-service
+          - name: ZIPKIN_SERVER
+            value: zipkin-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-gateway-api
+  labels:
+    app: api-gateway
+spec:
+  selector:
+    app: api-gateway
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8058
+      targetPort: 8058
