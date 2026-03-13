@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: palla023/apigateway:8.0
+          image: gateway DockerimageName
           imagePullPolicy: Always
           ports:
           - containerPort: 8058
